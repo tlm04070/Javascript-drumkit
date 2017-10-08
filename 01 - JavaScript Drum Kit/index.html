@@ -7,6 +7,7 @@
 </head>
 <body>
 
+<!-- adds all of the keys used with a data named key which corresponds to their key code -->
 
   <div class="keys">
     <div data-key="65" class="key">
@@ -47,6 +48,8 @@
     </div>
   </div>
 
+  <!-- adds audio tags for each sound to be loaded in with the data named with the corresponding key above -->
+  
   <audio data-key="65" src="sounds/clap.wav"></audio>
   <audio data-key="83" src="sounds/hihat.wav"></audio>
   <audio data-key="68" src="sounds/kick.wav"></audio>
@@ -60,31 +63,32 @@
 <script>
 
 
-
+// funciton that fires on click event to play the attached sound
 function playSound(e){
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); // set audio variable to grabbed audio tag
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); // set key variable to the grabbed key class
     console.log(audio);
-    if(!audio) return;
-    audio.currentTime= 0;
-    audio.play();
+    if(!audio) return; 
+    audio.currentTime= 0; // sets the time of the button press to 0 as to play each sound as soon as it's pressed
+    audio.play(); 
     console.log(key);
-    key.classList.add('playing');
+    key.classList.add('playing'); // adds a new class of playing for css styling to apply to the selected tag
   };
 
+// function that removes the transition that takes place after key press
 function removeTransition(e){
-  if(e.propertyName !== 'transform') return;
+  if(e.propertyName !== 'transform') return; // returns the function if the porperty name isn't transform 
   console.log(e.propertyName);
-  this.classList.remove('playing');
+  this.classList.remove('playing'); // removes the class that was added on key down event
 }
 
 
-const keys = document.querySelectorAll('.key');
-keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-window.addEventListener("keydown", playSound);
+const keys = document.querySelectorAll('.key'); // selects every element with the class of key, and sets it to a variable
+keys.forEach(key => key.addEventListener('transitionend', removeTransition)); // adds an event listener to fire after every transition on every button, with the function removeTransition to fire
+window.addEventListener("keydown", playSound); // adds a keydown event to fire the playSound function which begins the whole chain of adding/removing classes and styling, as well as playing sounds
 </script>
 
 
-\
+
 </body>
 </html>
